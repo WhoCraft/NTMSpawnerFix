@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IWorld;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -27,7 +28,7 @@ public class NTMSpawnerFix {
         IWorld world = event.getWorld();
         if (world.getDimension() instanceof TardisDimension) {
             if (spawnReason == SpawnReason.NATURAL) {
-                event.setCanceled(!isWhitelisted(event.getEntityLiving()));
+                event.setResult(isWhitelisted(event.getEntityLiving()) ? Event.Result.DEFAULT : Event.Result.DENY);
             }
         }
     }
